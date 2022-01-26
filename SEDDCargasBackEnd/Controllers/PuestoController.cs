@@ -44,9 +44,11 @@ namespace SEDDCargasBackEnd.Controllers
                     string Empresa = Convert.ToString(Valores[0]);
                     string Direccion = Convert.ToString(Valores[1]);
                     string Gerencia = Convert.ToString(Valores[2]);
-                    string Departamento = Convert.ToString(Valores[3]);
-                    Int64 NivelPuesto = Convert.ToInt64(Valores[4]);
+                    Int64 CentroCosto = Convert.ToInt64(Valores[3]);
+                    string JerarquiaMinima = Convert.ToString(Valores[4]);
                     string Puesto = Convert.ToString(Valores[5]);
+                    string DescripcionPuesto = Convert.ToString(Valores[6]);
+                    string Idioma = Convert.ToString(Valores[7]);
 
                     SqlCommand comando2 = new SqlCommand("Cargas.AltaPuesto");
                     comando2.CommandType = CommandType.StoredProcedure;
@@ -55,17 +57,21 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters.Add("@Empresa", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Direccion", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Gerencia", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Departamento", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@NivelPuestoId", SqlDbType.BigInt);
-                    comando2.Parameters.Add("@NombrePuesto", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@CentroCostos", SqlDbType.BigInt);
+                    comando2.Parameters.Add("@JerarquiaMinima", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@Puesto", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@DescripcionPuesto", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@Idioma", SqlDbType.VarChar);
 
                     //Asignacion de valores a parametros
                     comando2.Parameters["@Empresa"].Value = Empresa;
                     comando2.Parameters["@Direccion"].Value = Direccion;
                     comando2.Parameters["@Gerencia"].Value = Gerencia;
-                    comando2.Parameters["@Departamento"].Value = Departamento;
-                    comando2.Parameters["@NivelPuestoId"].Value = NivelPuesto;
-                    comando2.Parameters["@NombrePuesto"].Value = Puesto;
+                    comando2.Parameters["@CentroCostos"].Value = CentroCosto;
+                    comando2.Parameters["@JerarquiaMinima"].Value = @JerarquiaMinima;
+                    comando2.Parameters["@Puesto"].Value = Puesto;
+                    comando2.Parameters["@DescripcionPuesto"].Value = DescripcionPuesto;
+                    comando2.Parameters["@Idioma"].Value = Idioma;
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
                     comando2.CommandTimeout = 0;
@@ -76,11 +82,11 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Connection.Close();
                     DA2.Fill(DT2);
 
-                     Mensaje = "OK";
-                     Estatus = 1;
+                    Mensaje = "OK";
+                    Estatus = 1;
 
                 }
-                
+
                 JObject Resultado = JObject.FromObject(new
                 {
                     mensaje = Mensaje,

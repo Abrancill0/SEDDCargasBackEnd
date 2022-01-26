@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace SEDDCargasBackEnd.Controllers
 {
-    public class DepartamentoController : ApiController
+    public class NivelPuestoController : ApiController
     {
         public class ParametorsEntrada
         {
@@ -41,28 +41,21 @@ namespace SEDDCargasBackEnd.Controllers
 
                     string[] Valores = EliminaParte3.Split(',');
 
-                    string Empresa = Convert.ToString(Valores[0]);
-                    string Direccion = Convert.ToString(Valores[1]);
-                    string Gerencia = Convert.ToString(Valores[2]);
-                    string Departamento = Convert.ToString(Valores[3]);
-                    Int64 CentroCosto = Convert.ToInt64(Valores[4]);
+                    string NombreEmpresa = Convert.ToString(Valores[0]);
+                    string JerarquiaMinima = Convert.ToString(Valores[1]);
 
-                    SqlCommand comando2 = new SqlCommand("Cargas.AltaDepartamentos");
+                    SqlCommand comando2 = new SqlCommand("Cargas.AltaNivelPuesto");
                     comando2.CommandType = CommandType.StoredProcedure;
 
                     //Declaracion de parametros 
-                    comando2.Parameters.Add("@Empresa", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Direccion", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Gerencia", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Departamento", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@CentroCosto", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@NombreEmpresa", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@JerarquiaMinima", SqlDbType.VarChar);
+
 
                     //Asignacion de valores a parametros
-                    comando2.Parameters["@Empresa"].Value = Empresa;
-                    comando2.Parameters["@Direccion"].Value = Direccion;
-                    comando2.Parameters["@Gerencia"].Value = Gerencia;
-                    comando2.Parameters["@Departamento"].Value = Departamento;
-                    comando2.Parameters["@CentroCosto"].Value = CentroCosto;
+                    comando2.Parameters["@NombreEmpresa"].Value = NombreEmpresa;// Datos.IDHoles;
+                    comando2.Parameters["@JerarquiaMinima"].Value = JerarquiaMinima;// Datos.IDHoles;
+
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
                     comando2.CommandTimeout = 0;

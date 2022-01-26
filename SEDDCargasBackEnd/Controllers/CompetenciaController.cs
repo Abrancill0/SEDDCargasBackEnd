@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace SEDDCargasBackEnd.Controllers
 {
-    public class DepartamentoController : ApiController
+    public class CompetenciaController : ApiController
     {
         public class ParametorsEntrada
         {
@@ -41,28 +41,32 @@ namespace SEDDCargasBackEnd.Controllers
 
                     string[] Valores = EliminaParte3.Split(',');
 
-                    string Empresa = Convert.ToString(Valores[0]);
-                    string Direccion = Convert.ToString(Valores[1]);
-                    string Gerencia = Convert.ToString(Valores[2]);
-                    string Departamento = Convert.ToString(Valores[3]);
-                    Int64 CentroCosto = Convert.ToInt64(Valores[4]);
+                    string DeMando = Convert.ToString(Valores[0]);
+                    string DescripcionTipoCompetencia = Convert.ToString(Valores[1]);
+                    string NombreCompetencia = Convert.ToString(Valores[2]);
+                    string DescripcionCompetencia = Convert.ToString(Valores[3]);
+                    string Idioma = Convert.ToString(Valores[4]);
+                    string Empresa = Convert.ToString(Valores[5]);
 
-                    SqlCommand comando2 = new SqlCommand("Cargas.AltaDepartamentos");
+                    SqlCommand comando2 = new SqlCommand("Cargas.AltaCompetencias");
                     comando2.CommandType = CommandType.StoredProcedure;
 
+   
                     //Declaracion de parametros 
+                    comando2.Parameters.Add("@DeMando", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@DescripcionTipoCompetencia", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@NombreCompetencia", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@DescripcionCompetencia", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@Idioma", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Empresa", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Direccion", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Gerencia", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Departamento", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@CentroCosto", SqlDbType.VarChar);
 
                     //Asignacion de valores a parametros
+                    comando2.Parameters["@DeMando"].Value = DeMando;
+                    comando2.Parameters["@DescripcionTipoCompetencia"].Value = DescripcionTipoCompetencia;
+                    comando2.Parameters["@NombreCompetencia"].Value = NombreCompetencia;
+                    comando2.Parameters["@DescripcionCompetencia"].Value = DescripcionCompetencia;
+                    comando2.Parameters["@Idioma"].Value = Idioma;
                     comando2.Parameters["@Empresa"].Value = Empresa;
-                    comando2.Parameters["@Direccion"].Value = Direccion;
-                    comando2.Parameters["@Gerencia"].Value = Gerencia;
-                    comando2.Parameters["@Departamento"].Value = Departamento;
-                    comando2.Parameters["@CentroCosto"].Value = CentroCosto;
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
                     comando2.CommandTimeout = 0;
@@ -73,8 +77,11 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Connection.Close();
                     DA2.Fill(DT2);
 
-                     Mensaje = "OK";
-                     Estatus = 1;
+                    foreach (DataRow row in DT2.Rows)
+                    {
+                        Mensaje = Convert.ToString(row["mensaje"]);
+                        Estatus = Convert.ToInt32(row["Estatus"]);
+                    }
 
                 }
                 

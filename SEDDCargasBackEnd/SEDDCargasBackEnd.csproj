@@ -165,6 +165,16 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Clases\VariablesGlobales.cs" />
+    <Compile Include="Controllers\EscalaController.cs" />
+    <Compile Include="Controllers\EsquemaCompetenciaController.cs" />
+    <Compile Include="Controllers\NiveleCompetenciaController.cs" />
+    <Compile Include="Controllers\CompetenciaController.cs" />
+    <Compile Include="Controllers\TipoCompetenciaController.cs" />
+    <Compile Include="Controllers\EmpleadosController.cs" />
+    <Compile Include="Controllers\RolController.cs" />
+    <Compile Include="Controllers\NivelPuestoController.cs" />
+    <Compile Include="Controllers\OtrosJefesController.cs" />
+    <Compile Include="Controllers\VariantePuestoController.cs" />
     <Compile Include="Controllers\PuestoController.cs" />
     <Compile Include="Controllers\DepartamentoController.cs" />
     <Compile Include="Controllers\GerenciaController.cs" />
@@ -172,7 +182,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\IdiomasController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
