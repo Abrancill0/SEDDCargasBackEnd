@@ -165,7 +165,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Clases\VariablesGlobales.cs" />
-    <Compile Include="Controllers\MetasController.cs" />
+    <Compile Include="Controllers\ObjetivosController.cs" />
+    <Compile Include="Controllers\UnidadEvaluacionController.cs" />
+    <Compile Include="Controllers\MetodoEvaluacionController.cs" />
+    <Compile Include="Controllers\CriteriosEvaluacionController.cs" />
     <Compile Include="Controllers\EscalaController.cs" />
     <Compile Include="Controllers\EsquemaCompetenciaController.cs" />
     <Compile Include="Controllers\NiveleCompetenciaController.cs" />
