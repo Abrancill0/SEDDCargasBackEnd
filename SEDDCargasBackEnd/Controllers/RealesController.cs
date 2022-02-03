@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace SEDDCargasBackEnd.Controllers
 {
-    public class GerenciaController : ApiController
+    public class RealesController : ApiController
     {
         public class ParametorsEntrada
         {
@@ -45,24 +45,23 @@ namespace SEDDCargasBackEnd.Controllers
 
                     string[] Valores = EliminaParte3.Split(',');
 
-                    string NombreEmpresa = Convert.ToString(Valores[0]);
-                    string Direccion = Convert.ToString(Valores[1]);
-                    string NombreGerencia = Convert.ToString(Valores[2]);
-
-
-                    SqlCommand comando2 = new SqlCommand("Cargas.AltaGerencia");
+                    string ClaveObjetivo = Convert.ToString(Valores[0]);
+                    Int64 Mes = Convert.ToInt64(Valores[1]);
+                    double Resultado1 = Convert.ToDouble(Valores[2]);
+                   
+                    SqlCommand comando2 = new SqlCommand("Cargas.AltaReal");
                     comando2.CommandType = CommandType.StoredProcedure;
 
                     //Declaracion de parametros 
-                    comando2.Parameters.Add("@NombreEmpresa", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Direccion", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@NombreGerencia", SqlDbType.VarChar);
-
+                    comando2.Parameters.Add("@ClaveObjetivo", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@Mes", SqlDbType.Float);
+                    comando2.Parameters.Add("@Resultado", SqlDbType.Float);
+                   
                     //Asignacion de valores a parametros
-                    comando2.Parameters["@NombreEmpresa"].Value = NombreEmpresa;
-                    comando2.Parameters["@Direccion"].Value = Direccion;
-                    comando2.Parameters["@NombreGerencia"].Value = NombreGerencia;
-
+                    comando2.Parameters["@ClaveObjetivo"].Value = ClaveObjetivo;
+                    comando2.Parameters["@Mes"].Value = Mes;
+                    comando2.Parameters["@Resultado"].Value = Resultado1;
+          
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
                     comando2.CommandTimeout = 0;
                     comando2.Connection.Open();

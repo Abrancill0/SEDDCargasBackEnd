@@ -29,7 +29,11 @@ namespace SEDDCargasBackEnd.Controllers
 
                 string Arreglover = Datos.Arreglo;
 
-                string[] ArregloFinal = Arreglover.Split('{');
+                string ArregloTratado0 = Arreglover.Replace("'", "");
+                string ArregloTratado1 = ArregloTratado0.Replace("[", "");
+                string ArregloTratado2 = ArregloTratado1.Replace("]", "");
+
+                string[] ArregloFinal = ArregloTratado2.Split('{');
 
                 for (int i = 1; i < ArregloFinal.Length; i++)
                 {
@@ -50,6 +54,7 @@ namespace SEDDCargasBackEnd.Controllers
                     Int64 NominaResponsable = Convert.ToInt64(Valores[6]);
                     string Idioma = Convert.ToString(Valores[7]);
                     string NombreObjetivo = Convert.ToString(Valores[8]);
+                    string ClaveAluprint = Convert.ToString(Valores[9]);
 
                     SqlCommand comando2 = new SqlCommand("Cargas.AltaObjetivos");
                     comando2.CommandType = CommandType.StoredProcedure;
@@ -64,6 +69,7 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters.Add("@NominaResponsable", SqlDbType.BigInt);
                     comando2.Parameters.Add("@Idioma", SqlDbType.VarChar);
                     comando2.Parameters.Add("@NombreObjetivo", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@ClaveAluprint", SqlDbType.BigInt);
 
                     //Asignacion de valores a parametros
                     comando2.Parameters["@Empresa"].Value = Empresa;
@@ -75,7 +81,7 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters["@NominaResponsable"].Value = NominaResponsable;
                     comando2.Parameters["@Idioma"].Value = Idioma;
                     comando2.Parameters["@NombreObjetivo"].Value = NombreObjetivo;
-
+                    comando2.Parameters["@ClaveAluprint"].Value = ClaveAluprint;
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
                     comando2.CommandTimeout = 0;

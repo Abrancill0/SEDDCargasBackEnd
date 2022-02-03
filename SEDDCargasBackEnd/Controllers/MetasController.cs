@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace SEDDCargasBackEnd.Controllers
 {
-    public class GerenciaController : ApiController
+    public class MetasController : ApiController
     {
         public class ParametorsEntrada
         {
@@ -45,24 +45,38 @@ namespace SEDDCargasBackEnd.Controllers
 
                     string[] Valores = EliminaParte3.Split(',');
 
-                    string NombreEmpresa = Convert.ToString(Valores[0]);
-                    string Direccion = Convert.ToString(Valores[1]);
-                    string NombreGerencia = Convert.ToString(Valores[2]);
-
-
-                    SqlCommand comando2 = new SqlCommand("Cargas.AltaGerencia");
+                    string ClaveObjetivo = Convert.ToString(Valores[0]);
+                    double Aceptable = Convert.ToDouble(Valores[1]);
+                    double Sobresaliente = Convert.ToDouble(Valores[2]);
+                    double Excelente = Convert.ToDouble(Valores[3]);
+                    double Mes = Convert.ToDouble(Valores[4]);
+                    double AceptableM = Convert.ToDouble(Valores[5]);
+                    double SobresalienteM = Convert.ToDouble(Valores[6]);
+                    double ExcelenteM = Convert.ToDouble(Valores[7]);
+                   
+                    SqlCommand comando2 = new SqlCommand("Cargas.AltaMeta");
                     comando2.CommandType = CommandType.StoredProcedure;
 
                     //Declaracion de parametros 
-                    comando2.Parameters.Add("@NombreEmpresa", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Direccion", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@NombreGerencia", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@ClaveObjetivo", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@Aceptable", SqlDbType.Float);
+                    comando2.Parameters.Add("@Sobresaliente", SqlDbType.Float);
+                    comando2.Parameters.Add("@Excelente", SqlDbType.Float);
+                    comando2.Parameters.Add("@Mes", SqlDbType.Float);
+                    comando2.Parameters.Add("@AceptableM", SqlDbType.Float);
+                    comando2.Parameters.Add("@SobresalienteM", SqlDbType.Float);
+                    comando2.Parameters.Add("@ExcelenteM", SqlDbType.Float);
 
                     //Asignacion de valores a parametros
-                    comando2.Parameters["@NombreEmpresa"].Value = NombreEmpresa;
-                    comando2.Parameters["@Direccion"].Value = Direccion;
-                    comando2.Parameters["@NombreGerencia"].Value = NombreGerencia;
-
+                    comando2.Parameters["@ClaveObjetivo"].Value = ClaveObjetivo;
+                    comando2.Parameters["@Aceptable"].Value = Aceptable;
+                    comando2.Parameters["@Sobresaliente"].Value = Sobresaliente;
+                    comando2.Parameters["@Excelente"].Value = Excelente;
+                    comando2.Parameters["@Mes"].Value = Mes;
+                    comando2.Parameters["@AceptableM"].Value = AceptableM;
+                    comando2.Parameters["@SobresalienteM"].Value = SobresalienteM;
+                    comando2.Parameters["@ExcelenteM"].Value = ExcelenteM;
+          
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
                     comando2.CommandTimeout = 0;
                     comando2.Connection.Open();

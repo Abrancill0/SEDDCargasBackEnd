@@ -29,7 +29,11 @@ namespace SEDDCargasBackEnd.Controllers
 
                 string Arreglover = Datos.Arreglo;
 
-                string[] ArregloFinal = Arreglover.Split('{');
+                string ArregloTratado0 = Arreglover.Replace("'", "");
+                string ArregloTratado1 = ArregloTratado0.Replace("[", "");
+                string ArregloTratado2 = ArregloTratado1.Replace("]", "");
+
+                string[] ArregloFinal = ArregloTratado2.Split('{');
 
                 for (int i = 1; i < ArregloFinal.Length; i++)
                 {

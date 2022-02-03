@@ -29,7 +29,11 @@ namespace SEDDCargasBackEnd.Controllers
 
                 string Arreglover = Datos.Arreglo;
 
-                string[] ArregloFinal = Arreglover.Split('{');
+                string ArregloTratado0 = Arreglover.Replace("'", "");
+                string ArregloTratado1 = ArregloTratado0.Replace("[", "");
+                string ArregloTratado2 = ArregloTratado1.Replace("]", "");
+
+                string[] ArregloFinal = ArregloTratado2.Split('{');
 
                 for (int i = 1; i < ArregloFinal.Length; i++)
                 {
@@ -42,12 +46,7 @@ namespace SEDDCargasBackEnd.Controllers
                     string[] Valores = EliminaParte3.Split(',');
 
                     string Empresa = Convert.ToString(Valores[0]);
-                    string Direccion = Convert.ToString(Valores[1]);
-                    string Gerencia = Convert.ToString(Valores[2]);
-                    Int64 CentroCostos = Convert.ToInt64(Valores[3]);
-                
-                    string JerarquiaMinima = Convert.ToString(Valores[4]);
-                    string Puesto = Convert.ToString(Valores[5]);
+                    string ClavePuestoAluprint = Convert.ToString(Valores[5]);
                     string Competencia = Convert.ToString(Valores[6]);
                     double Peso = Convert.ToDouble(Valores[7]);
                 
@@ -61,30 +60,18 @@ namespace SEDDCargasBackEnd.Controllers
 
                     //Declaracion de parametros 
                     comando2.Parameters.Add("@Empresa", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Direccion", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Gerencia", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@CentroCostos", SqlDbType.BigInt);
-
-                    comando2.Parameters.Add("@JerarquiaMinima", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Puesto", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@ClavePuestoAluprint", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Competencia", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Peso", SqlDbType.Float);
-
                     comando2.Parameters.Add("@DescripcionTipoCompetencia", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Idioma", SqlDbType.VarChar);
                     comando2.Parameters.Add("@DeMando", SqlDbType.VarChar);
                     
                     //Asignacion de valores a parametros
                     comando2.Parameters["@Empresa"].Value = Empresa;
-                    comando2.Parameters["@Direccion"].Value = Direccion;
-                    comando2.Parameters["@Gerencia"].Value = Gerencia;
-                    comando2.Parameters["@CentroCostos"].Value = CentroCostos;
-
-                    comando2.Parameters["@JerarquiaMinima"].Value = JerarquiaMinima;
-                    comando2.Parameters["@Puesto"].Value = Puesto;
+                    comando2.Parameters["@ClavePuestoAluprint"].Value = ClavePuestoAluprint;
                     comando2.Parameters["@Competencia"].Value = Competencia;
                     comando2.Parameters["@Peso"].Value = Peso;
-
                     comando2.Parameters["@DescripcionTipoCompetencia"].Value = DescripcionTipoCompetencia;
                     comando2.Parameters["@Idioma"].Value = Idioma;
                     comando2.Parameters["@DeMando"].Value = DeMando;
