@@ -19,6 +19,13 @@ namespace SEDDCargasBackEnd.Controllers
 
         }
 
+        public class ParametrosSalida
+        {
+            public int Estatus1 { get; set; }
+            public string Error { get; set; }
+           
+        }
+
         public JObject Post(ParametorsEntrada Datos)
         {
 
@@ -34,6 +41,8 @@ namespace SEDDCargasBackEnd.Controllers
                 string ArregloTratado2 = ArregloTratado1.Replace("]", "");
 
                 string[] ArregloFinal = ArregloTratado2.Split('{');
+
+                List<ParametrosSalida> lista = new List<ParametrosSalida>();
 
                 for (int i = 1; i < ArregloFinal.Length; i++)
                 {
@@ -60,6 +69,7 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters.Add("@Gerencia", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Departamento", SqlDbType.VarChar);
                     comando2.Parameters.Add("@CentroCosto", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@Fila", SqlDbType.Int);
 
                     //Asignacion de valores a parametros
                     comando2.Parameters["@Empresa"].Value = Empresa;
@@ -67,6 +77,7 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters["@Gerencia"].Value = Gerencia;
                     comando2.Parameters["@Departamento"].Value = Departamento;
                     comando2.Parameters["@CentroCosto"].Value = CentroCosto;
+                    comando2.Parameters["@Fila"].Value = i;
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
                     comando2.CommandTimeout = 0;
@@ -77,15 +88,52 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Connection.Close();
                     DA2.Fill(DT2);
 
-                     Mensaje = "OK";
-                     Estatus = 1;
+
+                    int contador = DT2.Rows.Count;
+
+                    if (DT2.Rows.Count > 0)
+                    {
+
+                        foreach (DataRow row in DT2.Rows)
+                        {
+                            Mensaje = Convert.ToString(row["mensaje"]);
+                            Estatus = Convert.ToInt32(row["Estatus"]);
+                        }
+
+                        if (Estatus == 0)
+                        {
+                            ParametrosSalida ent = new ParametrosSalida
+                            {
+                                Estatus1 = Estatus,
+                                Error = Mensaje
+
+                            };
+
+                            lista.Add(ent);
+
+                        }
+                        
+                    }
+                    else
+                    {
+                        ParametrosSalida ent = new ParametrosSalida
+                        {
+                            Estatus1 = 0,
+                            Error = "No se encontraron Registros"
+
+                        };
+
+                        lista.Add(ent);
+
+                    }
 
                 }
-                
+
                 JObject Resultado = JObject.FromObject(new
                 {
-                    mensaje = Mensaje,
-                    estatus = Estatus,
+                    mensaje = "OK",
+                    estatus = 1,
+                    Resultado = lista
                 });
 
                 return Resultado;

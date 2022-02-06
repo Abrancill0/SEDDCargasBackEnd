@@ -19,6 +19,14 @@ namespace SEDDCargasBackEnd.Controllers
 
         }
 
+        public class ParametrosSalida
+        {
+            public int Estatus1 { get; set; }
+            public string Error { get; set; }
+
+        }
+
+
         public JObject Post(ParametorsEntrada Datos)
         {
 
@@ -35,6 +43,8 @@ namespace SEDDCargasBackEnd.Controllers
 
                 string[] ArregloFinal = ArregloTratado2.Split('{');
 
+                List<ParametrosSalida> lista = new List<ParametrosSalida>();
+
                 for (int i = 1; i < ArregloFinal.Length; i++)
                 {
                     string ArregloSimple = ArregloFinal[i];
@@ -47,6 +57,8 @@ namespace SEDDCargasBackEnd.Controllers
 
                     string NombreEmpresa = Convert.ToString(Valores[0]);
                     string JerarquiaMinima = Convert.ToString(Valores[1]);
+                    string NombreIdioma = Convert.ToString(Valores[2]);
+                    string NombreNivelPuesto = Convert.ToString(Valores[3]);
 
                     SqlCommand comando2 = new SqlCommand("Cargas.AltaNivelPuesto");
                     comando2.CommandType = CommandType.StoredProcedure;
@@ -54,11 +66,16 @@ namespace SEDDCargasBackEnd.Controllers
                     //Declaracion de parametros 
                     comando2.Parameters.Add("@NombreEmpresa", SqlDbType.VarChar);
                     comando2.Parameters.Add("@JerarquiaMinima", SqlDbType.VarChar);
-
+                    comando2.Parameters.Add("@NombreIdioma", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@NombreNivelPuesto", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@Fila", SqlDbType.Int);
 
                     //Asignacion de valores a parametros
-                    comando2.Parameters["@NombreEmpresa"].Value = NombreEmpresa;// Datos.IDHoles;
-                    comando2.Parameters["@JerarquiaMinima"].Value = JerarquiaMinima;// Datos.IDHoles;
+                    comando2.Parameters["@NombreEmpresa"].Value = NombreEmpresa;
+                    comando2.Parameters["@JerarquiaMinima"].Value = JerarquiaMinima;
+                    comando2.Parameters["@NombreIdioma"].Value = NombreIdioma;
+                    comando2.Parameters["@NombreNivelPuesto"].Value = NombreNivelPuesto;
+                    comando2.Parameters["@Fila"].Value = i;
 
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
@@ -70,19 +87,52 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Connection.Close();
                     DA2.Fill(DT2);
 
-                     Mensaje = "OK";
-                     Estatus = 1;
+                    if (DT2.Rows.Count > 0)
+                    {
+
+                        foreach (DataRow row in DT2.Rows)
+                        {
+                            Mensaje = Convert.ToString(row["mensaje"]);
+                            Estatus = Convert.ToInt32(row["Estatus"]);
+                        }
+
+                        if (Estatus == 0)
+                        {
+                            ParametrosSalida ent = new ParametrosSalida
+                            {
+                                Estatus1 = Estatus,
+                                Error = Mensaje
+
+                            };
+
+                            lista.Add(ent);
+
+                        }
+
+                    }
+                    else
+                    {
+                        ParametrosSalida ent = new ParametrosSalida
+                        {
+                            Estatus1 = 0,
+                            Error = "No se encontraron Registros"
+
+                        };
+
+                        lista.Add(ent);
+
+                    }
 
                 }
-                
+
                 JObject Resultado = JObject.FromObject(new
                 {
-                    mensaje = Mensaje,
-                    estatus = Estatus,
+                    mensaje = "OK",
+                    estatus = 1,
+                    Resultado = lista
                 });
 
                 return Resultado;
-
             }
             catch (Exception ex)
             {

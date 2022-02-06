@@ -19,6 +19,13 @@ namespace SEDDCargasBackEnd.Controllers
 
         }
 
+        public class ParametrosSalida
+        {
+            public int Estatus1 { get; set; }
+            public string Error { get; set; }
+
+        }
+
         public JObject Post(ParametorsEntrada Datos)
         {
 
@@ -35,6 +42,8 @@ namespace SEDDCargasBackEnd.Controllers
 
                 string[] ArregloFinal = ArregloTratado2.Split('{');
 
+                List<ParametrosSalida> lista = new List<ParametrosSalida>();
+
                 for (int i = 1; i < ArregloFinal.Length; i++)
                 {
                     string ArregloSimple = ArregloFinal[i];
@@ -49,10 +58,10 @@ namespace SEDDCargasBackEnd.Controllers
                     string Direccion = Convert.ToString(Valores[1]);
                     string Gerencia = Convert.ToString(Valores[2]);
                     Int64 CentroCosto = Convert.ToInt64(Valores[3]);
-                    string JerarquiaMinima = Convert.ToString(Valores[4]);
-                    string Puesto = Convert.ToString(Valores[5]);
-                    string DescripcionPuesto = Convert.ToString(Valores[6]);
-                    string Idioma = Convert.ToString(Valores[7]);
+                    string NombreNivelPuesto = Convert.ToString(Valores[4]);
+                    string DescripcionPuesto = Convert.ToString(Valores[5]);
+                    string Idioma = Convert.ToString(Valores[6]);
+                    string ClavePuestoAluprint = Convert.ToString(Valores[7]);
 
                     SqlCommand comando2 = new SqlCommand("Cargas.AltaPuesto");
                     comando2.CommandType = CommandType.StoredProcedure;
@@ -62,20 +71,22 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters.Add("@Direccion", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Gerencia", SqlDbType.VarChar);
                     comando2.Parameters.Add("@CentroCostos", SqlDbType.BigInt);
-                    comando2.Parameters.Add("@JerarquiaMinima", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Puesto", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@NombreNivelPuesto", SqlDbType.VarChar);
                     comando2.Parameters.Add("@DescripcionPuesto", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Idioma", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@ClavePuestoAluprint", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@Fila", SqlDbType.Int);
 
                     //Asignacion de valores a parametros
                     comando2.Parameters["@Empresa"].Value = Empresa;
                     comando2.Parameters["@Direccion"].Value = Direccion;
                     comando2.Parameters["@Gerencia"].Value = Gerencia;
                     comando2.Parameters["@CentroCostos"].Value = CentroCosto;
-                    comando2.Parameters["@JerarquiaMinima"].Value = @JerarquiaMinima;
-                    comando2.Parameters["@Puesto"].Value = Puesto;
+                    comando2.Parameters["@NombreNivelPuesto"].Value = NombreNivelPuesto;
                     comando2.Parameters["@DescripcionPuesto"].Value = DescripcionPuesto;
                     comando2.Parameters["@Idioma"].Value = Idioma;
+                    comando2.Parameters["@ClavePuestoAluprint"].Value = ClavePuestoAluprint;
+                    comando2.Parameters["@Fila"].Value = i;
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
                     comando2.CommandTimeout = 0;
@@ -86,15 +97,49 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Connection.Close();
                     DA2.Fill(DT2);
 
-                    Mensaje = "OK";
-                    Estatus = 1;
+                    if (DT2.Rows.Count > 0)
+                    {
+
+                        foreach (DataRow row in DT2.Rows)
+                        {
+                            Mensaje = Convert.ToString(row["mensaje"]);
+                            Estatus = Convert.ToInt32(row["Estatus"]);
+                        }
+
+                        if (Estatus == 0)
+                        {
+                            ParametrosSalida ent = new ParametrosSalida
+                            {
+                                Estatus1 = Estatus,
+                                Error = Mensaje
+
+                            };
+
+                            lista.Add(ent);
+
+                        }
+
+                    }
+                    else
+                    {
+                        ParametrosSalida ent = new ParametrosSalida
+                        {
+                            Estatus1 = 0,
+                            Error = "No se encontraron Registros"
+
+                        };
+
+                        lista.Add(ent);
+
+                    }
 
                 }
 
                 JObject Resultado = JObject.FromObject(new
                 {
-                    mensaje = Mensaje,
-                    estatus = Estatus,
+                    mensaje = "OK",
+                    estatus = 1,
+                    Resultado = lista
                 });
 
                 return Resultado;
