@@ -173,7 +173,7 @@
     <Compile Include="Controllers\CriteriosEvaluacionController.cs" />
     <Compile Include="Controllers\EscalaController.cs" />
     <Compile Include="Controllers\EsquemaCompetenciaController.cs" />
-    <Compile Include="Controllers\NiveleCompetenciaController.cs" />
+    <Compile Include="Controllers\NivelCompetenciaController.cs" />
     <Compile Include="Controllers\CompetenciaController.cs" />
     <Compile Include="Controllers\TipoCompetenciaController.cs" />
     <Compile Include="Controllers\EmpleadosController.cs" />

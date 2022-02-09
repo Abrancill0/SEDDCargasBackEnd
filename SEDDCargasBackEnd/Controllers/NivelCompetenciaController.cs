@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace SEDDCargasBackEnd.Controllers
 {
-    public class NiveleCompetenciaController : ApiController
+    public class NivelCompetenciaController : ApiController
     {
         public class ParametorsEntrada
         {
@@ -43,7 +43,6 @@ namespace SEDDCargasBackEnd.Controllers
 
                 List<ParametrosSalida> lista = new List<ParametrosSalida>();
 
-
                 for (int i = 1; i < ArregloFinal.Length; i++)
                 {
                     string ArregloSimple = ArregloFinal[i];
@@ -57,8 +56,10 @@ namespace SEDDCargasBackEnd.Controllers
                     string Color = Convert.ToString(Valores[0]);
                     string Idioma = Convert.ToString(Valores[1]);
                     string NombreNivelCompetencia = Convert.ToString(Valores[2]);
-                    string NombreEncuesta = Convert.ToString(Valores[3]);
-                  
+                    string DescripcionDetalle = Convert.ToString(Valores[3]);
+                    string Peso = Convert.ToString(Valores[4]);
+                   //string PesoLimite = Convert.ToString(Valores[5]);
+
                     SqlCommand comando2 = new SqlCommand("Cargas.AltaNivelCompetencias");
                     comando2.CommandType = CommandType.StoredProcedure;
 
@@ -66,14 +67,18 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters.Add("@Color", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Idioma", SqlDbType.VarChar);
                     comando2.Parameters.Add("@NombreNivelCompetencia", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@NombreEncuesta", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@DescripcionDetalle", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@Peso", SqlDbType.VarChar);
+                    //comando2.Parameters.Add("@PesoLimite", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Fila", SqlDbType.Int);
 
                     //Asignacion de valores a parametros
                     comando2.Parameters["@Color"].Value = Color;
                     comando2.Parameters["@Idioma"].Value = Idioma;
                     comando2.Parameters["@NombreNivelCompetencia"].Value = NombreNivelCompetencia;
-                    comando2.Parameters["@NombreEncuesta"].Value = NombreEncuesta;
+                    comando2.Parameters["@DescripcionDetalle"].Value = DescripcionDetalle;
+                    comando2.Parameters["@Peso"].Value = Peso;
+                    //comando2.Parameters["@PesoLimite"].Value = PesoLimite;
                     comando2.Parameters["@Fila"].Value = i;
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);

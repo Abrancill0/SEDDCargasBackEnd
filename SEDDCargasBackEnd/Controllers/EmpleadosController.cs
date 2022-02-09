@@ -63,18 +63,37 @@ namespace SEDDCargasBackEnd.Controllers
                     string Sexo = Convert.ToString(Valores[4]);
                     Int64 IMSS = Convert.ToInt64(Valores[5]);
                     Int64 CentroCosto = Convert.ToInt64(Valores[6]);
-                    Int64 Nomina = Convert.ToInt64(Valores[7]);
-                    string Puesto = Convert.ToString(Valores[8]);
+                    string Nomina = Convert.ToString(Valores[7]);
+                    string ClavePuesto = Convert.ToString(Valores[8]);
                     string VariantePuesto = Convert.ToString(Valores[9]);
-                    Int64 NominaJefe = Convert.ToInt64(Valores[10]);
+                    string NominaJefe = Convert.ToString(Valores[10]);
                     string JerarquiaEmpleado = Convert.ToString(Valores[11]);
                     Int64 TipoEmpleadoCFLEX = Convert.ToInt64(Valores[12]);
                     Int64 TipoUsuario = Convert.ToInt64(Valores[13]);
-                    DateTime FechaAntiguedad = Convert.ToDateTime(Valores[14]);
+                   // DateTime FechaAntiguedad = Convert.ToDateTime(Valores[14]);
+
+                    string FechaAntiguedadSinFormato = Convert.ToString(Valores[14]);
+
+                    string Dia1 = (FechaAntiguedadSinFormato.Substring(0, 2));
+                    string Mes1 = (FechaAntiguedadSinFormato.Substring(3, 2));
+                    string Año1 = (FechaAntiguedadSinFormato.Substring(6, 4));
+
+                    string FechaAntiguedadCasiFormato = (Año1 + '-' + Mes1 + '-' + Dia1);
+                    string FechaAntiguedad = FechaAntiguedadCasiFormato;
+
                     int ActivoEvaluacion = Convert.ToInt32(Valores[15]);
                     string Idioma = Convert.ToString(Valores[16]);
                     string CorreoElectronico = Convert.ToString(Valores[17]);
-                    DateTime FechaPuesto = Convert.ToDateTime(Valores[18]);
+                    string FechaPuestoSinFormato = Convert.ToString(Valores[18]);
+
+                    string Dia = (FechaPuestoSinFormato.Substring(0,2));
+                    string Mes = (FechaPuestoSinFormato.Substring(3, 2));
+                    string Año = (FechaPuestoSinFormato.Substring(6, 4));
+
+                    string FechaPuestoCasiFormato = (Año + '-' + Mes + '-' + Dia);
+                    string FechaPuesto = FechaPuestoCasiFormato;
+                    //23/ 03/ 1987
+                    //012 345 6789
                     string TipoArea = Convert.ToString(Valores[19]);
                     string NominaJefeInvitado = Convert.ToString(Valores[20]);
 
@@ -89,10 +108,10 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters.Add("@Sexo", SqlDbType.VarChar);
                     comando2.Parameters.Add("@IMSS", SqlDbType.BigInt);
                     comando2.Parameters.Add("@CentroCosto", SqlDbType.BigInt);
-                    comando2.Parameters.Add("@Nomina", SqlDbType.BigInt);
+                    comando2.Parameters.Add("@Nomina", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Puesto", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@VariantePuesto", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@NominaJefe", SqlDbType.BigInt);
+                    comando2.Parameters.Add("@ClaveVariantePuesto", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@NominaJefe", SqlDbType.VarChar);
                     comando2.Parameters.Add("@JerarquiaEmpleado", SqlDbType.VarChar);
                     comando2.Parameters.Add("@TipoEmpleadoCFLEX", SqlDbType.BigInt);
                     comando2.Parameters.Add("@TipoUsuario", SqlDbType.BigInt);
@@ -104,6 +123,7 @@ namespace SEDDCargasBackEnd.Controllers
                    
                     comando2.Parameters.Add("@TipoArea", SqlDbType.VarChar);
                     comando2.Parameters.Add("@NominaJefeInvitado", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@Fila", SqlDbType.VarChar);
 
                     //Asignacion de valores a parametros
                     comando2.Parameters["@Nombre"].Value = Nombre;
@@ -114,8 +134,8 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters["@IMSS"].Value = IMSS;
                     comando2.Parameters["@CentroCosto"].Value = CentroCosto;
                     comando2.Parameters["@Nomina"].Value = Nomina;
-                    comando2.Parameters["@Puesto"].Value = Puesto;
-                    comando2.Parameters["@VariantePuesto"].Value = VariantePuesto;
+                    comando2.Parameters["@Puesto"].Value = ClavePuesto;
+                    comando2.Parameters["@ClaveVariantePuesto"].Value = VariantePuesto;
                     comando2.Parameters["@NominaJefe"].Value = NominaJefe;
                     comando2.Parameters["@JerarquiaEmpleado"].Value = JerarquiaEmpleado;
                     comando2.Parameters["@TipoEmpleadoCFLEX"].Value = TipoEmpleadoCFLEX;
@@ -128,6 +148,7 @@ namespace SEDDCargasBackEnd.Controllers
                   
                     comando2.Parameters["@TipoArea"].Value = TipoArea;
                     comando2.Parameters["@NominaJefeInvitado"].Value = NominaJefeInvitado;
+                    comando2.Parameters["@Fila"].Value = i;
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
                     comando2.CommandTimeout = 0;

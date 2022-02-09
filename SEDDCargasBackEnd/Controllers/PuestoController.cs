@@ -54,22 +54,22 @@ namespace SEDDCargasBackEnd.Controllers
 
                     string[] Valores = EliminaParte3.Split(',');
 
-                    string Empresa = Convert.ToString(Valores[0]);
-                    string Direccion = Convert.ToString(Valores[1]);
-                    string Gerencia = Convert.ToString(Valores[2]);
-                    Int64 CentroCosto = Convert.ToInt64(Valores[3]);
-                    string NombreNivelPuesto = Convert.ToString(Valores[4]);
-                    string DescripcionPuesto = Convert.ToString(Valores[5]);
-                    string Idioma = Convert.ToString(Valores[6]);
-                    string ClavePuestoAluprint = Convert.ToString(Valores[7]);
+                    //string Empresa = Convert.ToString(Valores[0]);
+                    //string Direccion = Convert.ToString(Valores[1]);
+                    //string Gerencia = Convert.ToString(Valores[2]);
+                    Int64 CentroCosto = Convert.ToInt64(Valores[0]);
+                    string NombreNivelPuesto = Convert.ToString(Valores[1]);
+                    string DescripcionPuesto = Convert.ToString(Valores[2]);
+                    string Idioma = Convert.ToString(Valores[3]);
+                    string ClavePuestoAluprint = Convert.ToString(Valores[4]);
 
                     SqlCommand comando2 = new SqlCommand("Cargas.AltaPuesto");
                     comando2.CommandType = CommandType.StoredProcedure;
 
                     //Declaracion de parametros 
-                    comando2.Parameters.Add("@Empresa", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Direccion", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Gerencia", SqlDbType.VarChar);
+                    //comando2.Parameters.Add("@Empresa", SqlDbType.VarChar);
+                    //comando2.Parameters.Add("@Direccion", SqlDbType.VarChar);
+                    //comando2.Parameters.Add("@Gerencia", SqlDbType.VarChar);
                     comando2.Parameters.Add("@CentroCostos", SqlDbType.BigInt);
                     comando2.Parameters.Add("@NombreNivelPuesto", SqlDbType.VarChar);
                     comando2.Parameters.Add("@DescripcionPuesto", SqlDbType.VarChar);
@@ -78,9 +78,9 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters.Add("@Fila", SqlDbType.Int);
 
                     //Asignacion de valores a parametros
-                    comando2.Parameters["@Empresa"].Value = Empresa;
-                    comando2.Parameters["@Direccion"].Value = Direccion;
-                    comando2.Parameters["@Gerencia"].Value = Gerencia;
+                    //comando2.Parameters["@Empresa"].Value = Empresa;
+                    //comando2.Parameters["@Direccion"].Value = Direccion;
+                    //comando2.Parameters["@Gerencia"].Value = Gerencia;
                     comando2.Parameters["@CentroCostos"].Value = CentroCosto;
                     comando2.Parameters["@NombreNivelPuesto"].Value = NombreNivelPuesto;
                     comando2.Parameters["@DescripcionPuesto"].Value = DescripcionPuesto;
