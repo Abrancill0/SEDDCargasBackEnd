@@ -61,6 +61,9 @@ namespace SEDDCargasBackEnd.Controllers
                     string DescripcionCompetencia = Convert.ToString(Valores[3]);
                     string Idioma = Convert.ToString(Valores[4]);
                     string Empresa = Convert.ToString(Valores[5]);
+                    string ClaveCompetenciaAluprint = Convert.ToString(Valores[6]);
+
+      
 
                     SqlCommand comando2 = new SqlCommand("Cargas.AltaCompetencias");
                     comando2.CommandType = CommandType.StoredProcedure;
@@ -73,6 +76,7 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters.Add("@DescripcionCompetencia", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Idioma", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Empresa", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@ClaveCompetenciaAluprint", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Fila", SqlDbType.Int);
 
                     //Asignacion de valores a parametros
@@ -82,6 +86,7 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters["@DescripcionCompetencia"].Value = DescripcionCompetencia;
                     comando2.Parameters["@Idioma"].Value = Idioma;
                     comando2.Parameters["@Empresa"].Value = Empresa;
+                    comando2.Parameters["@ClaveCompetenciaAluprint"].Value = ClaveCompetenciaAluprint;
                     comando2.Parameters["@Fila"].Value = i;
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
