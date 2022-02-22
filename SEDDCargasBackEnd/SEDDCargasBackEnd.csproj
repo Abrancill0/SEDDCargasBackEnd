@@ -165,6 +165,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Clases\VariablesGlobales.cs" />
+    <Compile Include="Controllers\EsquemaObjetivosController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ActualizaJefesController.cs" />
+    <Compile Include="Controllers\PlanMejoraController.cs" />
     <Compile Include="Controllers\RealesController.cs" />
     <Compile Include="Controllers\MetasController.cs" />
     <Compile Include="Controllers\ObjetivosController.cs" />

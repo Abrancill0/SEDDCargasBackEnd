@@ -19,8 +19,18 @@ namespace SEDDCargasBackEnd.Controllers
 
         }
 
+        public class ParametrosSalida
+        {
+            public int Estatus1 { get; set; }
+            public string Error { get; set; }
+
+        }
+
         public JObject Post(ParametorsEntrada Datos)
         {
+            string NombreObjetivo = "";
+            Int64 NominaDueñoObjetivo = 0;
+            Int64 NominaResponsable = 0;
 
             try
             {
@@ -35,6 +45,8 @@ namespace SEDDCargasBackEnd.Controllers
 
                 string[] ArregloFinal = ArregloTratado2.Split('{');
 
+                List<ParametrosSalida> lista = new List<ParametrosSalida>();
+
                 for (int i = 1; i < ArregloFinal.Length; i++)
                 {
                     string ArregloSimple = ArregloFinal[i];
@@ -46,15 +58,16 @@ namespace SEDDCargasBackEnd.Controllers
                     string[] Valores = EliminaParte3.Split(',');
 
                     string Empresa = Convert.ToString(Valores[0]);
-                    Int64 NominaDueñoObjetivo = Convert.ToInt64(Valores[1]);
-                    string CriterioEvaluacion = Convert.ToString(Valores[2]);
-                    string Unidad = Convert.ToString(Valores[3]);
-                    string MetodoEvaluacion = Convert.ToString(Valores[4]);
-                    Int64 DescripcionAluprintID = Convert.ToInt64(Valores[5]);
-                    Int64 NominaResponsable = Convert.ToInt64(Valores[6]);
-                    string Idioma = Convert.ToString(Valores[7]);
-                    string NombreObjetivo = Convert.ToString(Valores[8]);
-                    string ClaveAluprint = Convert.ToString(Valores[9]);
+                    string Idioma = Convert.ToString(Valores[1]);
+                    Int64 DescripcionAluprintID = Convert.ToInt64(Valores[2]);
+                    NombreObjetivo = Convert.ToString(Valores[3]);
+                    NominaDueñoObjetivo = Convert.ToInt64(Valores[4]);
+                    NominaResponsable = Convert.ToInt64(Valores[5]);
+                    string CriterioEvaluacion = Convert.ToString(Valores[6]);
+                    string Unidad = Convert.ToString(Valores[7]);
+                    string MetodoEvaluacion = Convert.ToString(Valores[8]);
+                
+                    //string ClaveAluprint = Convert.ToString(Valores[9]);
 
                     SqlCommand comando2 = new SqlCommand("Cargas.AltaObjetivos");
                     comando2.CommandType = CommandType.StoredProcedure;
@@ -69,7 +82,8 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters.Add("@NominaResponsable", SqlDbType.BigInt);
                     comando2.Parameters.Add("@Idioma", SqlDbType.VarChar);
                     comando2.Parameters.Add("@NombreObjetivo", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@ClaveAluprint", SqlDbType.BigInt);
+                   // comando2.Parameters.Add("@ClaveAluprint", SqlDbType.BigInt);
+                    comando2.Parameters.Add("@Fila", SqlDbType.VarChar);
 
                     //Asignacion de valores a parametros
                     comando2.Parameters["@Empresa"].Value = Empresa;
@@ -81,7 +95,8 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters["@NominaResponsable"].Value = NominaResponsable;
                     comando2.Parameters["@Idioma"].Value = Idioma;
                     comando2.Parameters["@NombreObjetivo"].Value = NombreObjetivo;
-                    comando2.Parameters["@ClaveAluprint"].Value = ClaveAluprint;
+                   // comando2.Parameters["@ClaveAluprint"].Value = ClaveAluprint;
+                    comando2.Parameters["@Fila"].Value = i;
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
                     comando2.CommandTimeout = 0;
@@ -92,18 +107,55 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Connection.Close();
                     DA2.Fill(DT2);
 
-                    Mensaje = "OK";
-                    Estatus = 1;
+                    int contador = DT2.Rows.Count;
+
+                    if (DT2.Rows.Count > 0)
+                    {
+
+                        foreach (DataRow row in DT2.Rows)
+                        {
+                            Mensaje = Convert.ToString(row["mensaje"]);
+                            Estatus = Convert.ToInt32(row["Estatus"]);
+                        }
+
+                        if (Estatus == 0)
+                        {
+                            ParametrosSalida ent = new ParametrosSalida
+                            {
+                                Estatus1 = Estatus,
+                                Error = Mensaje
+
+                            };
+
+                            lista.Add(ent);
+
+                        }
+
+                    }
+                    else
+                    {
+                        ParametrosSalida ent = new ParametrosSalida
+                        {
+                            Estatus1 = 0,
+                            Error = "No se encontraron Registros"
+
+                        };
+
+                        lista.Add(ent);
+
+                    }
 
                 }
 
                 JObject Resultado = JObject.FromObject(new
                 {
-                    mensaje = Mensaje,
-                    estatus = Estatus,
+                    mensaje = "OK",
+                    estatus = 1,
+                    Resultado = lista
                 });
 
                 return Resultado;
+
 
             }
             catch (Exception ex)
@@ -113,8 +165,11 @@ namespace SEDDCargasBackEnd.Controllers
                 {
                     mensaje = ex.ToString(),
                     estatus = 0,
+                    NombreObjetivo = NombreObjetivo,
+                    NominaDueñoObjetivo = NominaDueñoObjetivo,
+                    NominaResponsable = NominaResponsable
 
-                });
+            });
 
                 return Resultado;
             }

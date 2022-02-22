@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace SEDDCargasBackEnd.Controllers
 {
-    public class CriteriosEvaluacionController : ApiController
+    public class PlanMejoraController : ApiController
     {
         public class ParametorsEntrada
         {
@@ -54,23 +54,54 @@ namespace SEDDCargasBackEnd.Controllers
 
                     string[] Valores = EliminaParte3.Split(',');
 
+
+
+
+
                     string Empresa = Convert.ToString(Valores[0]);
                     string Idioma = Convert.ToString(Valores[1]);
-                    string NombreCriterioEvaluacion = Convert.ToString(Valores[2]);
+                   // string Perido = Convert.ToString(Valores[2]);
+                    string Nomina = Convert.ToString(Valores[2]);
+                    string ClaveCompetenciaAluprint = Convert.ToString(Valores[3]);
+                    string ClaveCursoAluprint = Convert.ToString(Valores[4]);
+                    string DescripcionAccionMejora = Convert.ToString(Valores[5]);
+                   // string RecursosNecesarios = Convert.ToString(Valores[7]);
+                    string Peso = Convert.ToString(Valores[6]);
+                    DateTime FechaAcordada = Convert.ToDateTime(Valores[7]);
+                   // string TipoCurso = Convert.ToString(Valores[10]);
+                    string TipoAccionesMejora = Convert.ToString(Valores[8]);
 
-                    SqlCommand comando2 = new SqlCommand("Cargas.AltaCriteriosEvaluacion");
+                    SqlCommand comando2 = new SqlCommand("Cargas.AltaPlanMejora");
                     comando2.CommandType = CommandType.StoredProcedure;
 
                     //Declaracion de parametros 
                     comando2.Parameters.Add("@Empresa", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@NombreCriterioEvaluacion", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Idioma", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@Idioma", SqlDbType.Float);
+                   // comando2.Parameters.Add("@Perido", SqlDbType.Float);
+                    comando2.Parameters.Add("@Nomina", SqlDbType.Float);
+                    comando2.Parameters.Add("@ClaveCompetenciaAluprint", SqlDbType.Float);
+                    comando2.Parameters.Add("@@ClaveCursoAluprint", SqlDbType.Float);
+                    comando2.Parameters.Add("@DescripcionAccionMejora", SqlDbType.Float);
+                  //  comando2.Parameters.Add("@RecursosNecesarios", SqlDbType.Float);
+                    comando2.Parameters.Add("@Peso", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@FechaAcordada", SqlDbType.DateTime);
+                  //  comando2.Parameters.Add("@TipoCurso", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@TipoAccionesMejora", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Fila", SqlDbType.VarChar);
 
                     //Asignacion de valores a parametros
                     comando2.Parameters["@Empresa"].Value = Empresa;
-                    comando2.Parameters["@NombreCriterioEvaluacion"].Value = NombreCriterioEvaluacion;
                     comando2.Parameters["@Idioma"].Value = Idioma;
+                //    comando2.Parameters["@Perido"].Value = Perido;
+                    comando2.Parameters["@Nomina"].Value = Nomina;
+                    comando2.Parameters["@ClaveCompetenciaAluprint"].Value = ClaveCompetenciaAluprint;
+                    comando2.Parameters["@ClaveCursoAluprint"].Value = @ClaveCursoAluprint;
+                    comando2.Parameters["@DescripcionAccionMejora"].Value = DescripcionAccionMejora;
+                   // comando2.Parameters["@RecursosNecesarios"].Value = RecursosNecesarios;
+                    comando2.Parameters["@Peso"].Value = Peso;
+                    comando2.Parameters["@FechaAcordada"].Value = FechaAcordada;
+                   // comando2.Parameters["@TipoCurso"].Value = TipoCurso;
+                    comando2.Parameters["@TipoAccionesMejora"].Value = TipoAccionesMejora;
                     comando2.Parameters["@Fila"].Value = i;
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
@@ -81,6 +112,7 @@ namespace SEDDCargasBackEnd.Controllers
                     SqlDataAdapter DA2 = new SqlDataAdapter(comando2);
                     comando2.Connection.Close();
                     DA2.Fill(DT2);
+
                     int contador = DT2.Rows.Count;
 
                     if (DT2.Rows.Count > 0)

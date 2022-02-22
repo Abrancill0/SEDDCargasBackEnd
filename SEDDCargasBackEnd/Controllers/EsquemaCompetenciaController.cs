@@ -44,6 +44,8 @@ namespace SEDDCargasBackEnd.Controllers
                 List<ParametrosSalida> lista = new List<ParametrosSalida>();
 
 
+
+
                 for (int i = 1; i < ArregloFinal.Length; i++)
                 {
                     string ArregloSimple = ArregloFinal[i];

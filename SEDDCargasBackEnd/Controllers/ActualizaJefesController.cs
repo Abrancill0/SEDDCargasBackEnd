@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace SEDDCargasBackEnd.Controllers
 {
-    public class CriteriosEvaluacionController : ApiController
+    public class ActualizaJefesController : ApiController
     {
         public class ParametorsEntrada
         {
@@ -25,7 +25,6 @@ namespace SEDDCargasBackEnd.Controllers
             public string Error { get; set; }
 
         }
-
         public JObject Post(ParametorsEntrada Datos)
         {
 
@@ -54,23 +53,20 @@ namespace SEDDCargasBackEnd.Controllers
 
                     string[] Valores = EliminaParte3.Split(',');
 
-                    string Empresa = Convert.ToString(Valores[0]);
-                    string Idioma = Convert.ToString(Valores[1]);
-                    string NombreCriterioEvaluacion = Convert.ToString(Valores[2]);
+                    Int64 Nomina = Convert.ToInt64(Valores[0]);
+                    Int64 NominaJefe = Convert.ToInt64(Valores[1]);
 
-                    SqlCommand comando2 = new SqlCommand("Cargas.AltaCriteriosEvaluacion");
+                    SqlCommand comando2 = new SqlCommand("Cargas.ActualizasJefes");
                     comando2.CommandType = CommandType.StoredProcedure;
 
                     //Declaracion de parametros 
-                    comando2.Parameters.Add("@Empresa", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@NombreCriterioEvaluacion", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Idioma", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Fila", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@Nomina", SqlDbType.BigInt);
+                    comando2.Parameters.Add("@NominaJefe", SqlDbType.BigInt);
+                    comando2.Parameters.Add("@Fila", SqlDbType.Int);
 
                     //Asignacion de valores a parametros
-                    comando2.Parameters["@Empresa"].Value = Empresa;
-                    comando2.Parameters["@NombreCriterioEvaluacion"].Value = NombreCriterioEvaluacion;
-                    comando2.Parameters["@Idioma"].Value = Idioma;
+                    comando2.Parameters["@Nomina"].Value = Nomina;
+                    comando2.Parameters["@NominaJefe"].Value = NominaJefe;
                     comando2.Parameters["@Fila"].Value = i;
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
@@ -81,7 +77,7 @@ namespace SEDDCargasBackEnd.Controllers
                     SqlDataAdapter DA2 = new SqlDataAdapter(comando2);
                     comando2.Connection.Close();
                     DA2.Fill(DT2);
-                    int contador = DT2.Rows.Count;
+
 
                     if (DT2.Rows.Count > 0)
                     {
@@ -129,7 +125,6 @@ namespace SEDDCargasBackEnd.Controllers
                 });
 
                 return Resultado;
-
 
             }
             catch (Exception ex)

@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace SEDDCargasBackEnd.Controllers
 {
-    public class CriteriosEvaluacionController : ApiController
+    public class EsquemaObjetivosController : ApiController
     {
         public class ParametorsEntrada
         {
@@ -26,8 +26,13 @@ namespace SEDDCargasBackEnd.Controllers
 
         }
 
+
         public JObject Post(ParametorsEntrada Datos)
         {
+
+            Int64 ClaveVariante =0;
+            Int64 ClaveObjetivo = 0;
+            float Peso =0;
 
             try
             {
@@ -54,24 +59,25 @@ namespace SEDDCargasBackEnd.Controllers
 
                     string[] Valores = EliminaParte3.Split(',');
 
-                    string Empresa = Convert.ToString(Valores[0]);
-                    string Idioma = Convert.ToString(Valores[1]);
-                    string NombreCriterioEvaluacion = Convert.ToString(Valores[2]);
+                     ClaveVariante = Convert.ToInt64(Valores[0]);
+                     ClaveObjetivo = Convert.ToInt64(Valores[1]);
+                     Peso = Convert.ToSingle(Valores[2]);
 
-                    SqlCommand comando2 = new SqlCommand("Cargas.AltaCriteriosEvaluacion");
+                    SqlCommand comando2 = new SqlCommand("Cargas.AltaEsquemaObjetivo");
                     comando2.CommandType = CommandType.StoredProcedure;
 
+
                     //Declaracion de parametros 
-                    comando2.Parameters.Add("@Empresa", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@NombreCriterioEvaluacion", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Idioma", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Fila", SqlDbType.VarChar);
+                    comando2.Parameters.Add("@ClaveVariantePuesto", SqlDbType.BigInt);
+                    comando2.Parameters.Add("@ClaveObjetivo", SqlDbType.BigInt);
+                    comando2.Parameters.Add("@Peso", SqlDbType.Float);
+                    comando2.Parameters.Add("@Fila", SqlDbType.Int);
 
                     //Asignacion de valores a parametros
-                    comando2.Parameters["@Empresa"].Value = Empresa;
-                    comando2.Parameters["@NombreCriterioEvaluacion"].Value = NombreCriterioEvaluacion;
-                    comando2.Parameters["@Idioma"].Value = Idioma;
-                    comando2.Parameters["@Fila"].Value = i;
+                    comando2.Parameters["@ClaveVariantePuesto"].Value = ClaveVariante;// Datos.IDHoles;
+                    comando2.Parameters["@ClaveObjetivo"].Value = ClaveObjetivo;// Datos.IDHoles;
+                    comando2.Parameters["@Peso"].Value = Peso;// Datos.IDHoles;
+                    comando2.Parameters["@Fila"].Value = i;// Datos.IDHoles;
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
                     comando2.CommandTimeout = 0;
@@ -81,6 +87,7 @@ namespace SEDDCargasBackEnd.Controllers
                     SqlDataAdapter DA2 = new SqlDataAdapter(comando2);
                     comando2.Connection.Close();
                     DA2.Fill(DT2);
+
                     int contador = DT2.Rows.Count;
 
                     if (DT2.Rows.Count > 0)
@@ -118,7 +125,6 @@ namespace SEDDCargasBackEnd.Controllers
                         lista.Add(ent);
 
                     }
-
                 }
 
                 JObject Resultado = JObject.FromObject(new
@@ -130,7 +136,6 @@ namespace SEDDCargasBackEnd.Controllers
 
                 return Resultado;
 
-
             }
             catch (Exception ex)
             {
@@ -139,7 +144,9 @@ namespace SEDDCargasBackEnd.Controllers
                 {
                     mensaje = ex.ToString(),
                     estatus = 0,
-
+                    ClaveVariante = ClaveVariante,
+                    ClaveObjetivo = ClaveObjetivo,
+                    Peso = Peso
                 });
 
                 return Resultado;
