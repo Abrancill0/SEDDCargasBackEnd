@@ -56,7 +56,7 @@ namespace SEDDCargasBackEnd.Controllers
 
 
 
-
+                    DateTime fecha = DateTime.Today;
 
                     string Empresa = Convert.ToString(Valores[0]);
                     string Idioma = Convert.ToString(Valores[1]);
@@ -70,18 +70,19 @@ namespace SEDDCargasBackEnd.Controllers
                     DateTime FechaAcordada = Convert.ToDateTime(Valores[7]);
                    // string TipoCurso = Convert.ToString(Valores[10]);
                     string TipoAccionesMejora = Convert.ToString(Valores[8]);
+                    //string ClaveCursoAluprint = Convert.ToString(Valores[9]);
 
                     SqlCommand comando2 = new SqlCommand("Cargas.AltaPlanMejora");
                     comando2.CommandType = CommandType.StoredProcedure;
 
                     //Declaracion de parametros 
                     comando2.Parameters.Add("@Empresa", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@Idioma", SqlDbType.Float);
+                    comando2.Parameters.Add("@Idioma", SqlDbType.VarChar);
                    // comando2.Parameters.Add("@Perido", SqlDbType.Float);
                     comando2.Parameters.Add("@Nomina", SqlDbType.Float);
                     comando2.Parameters.Add("@ClaveCompetenciaAluprint", SqlDbType.Float);
-                    comando2.Parameters.Add("@@ClaveCursoAluprint", SqlDbType.Float);
-                    comando2.Parameters.Add("@DescripcionAccionMejora", SqlDbType.Float);
+                    comando2.Parameters.Add("@ClaveCursoAluprint", SqlDbType.Float);
+                    comando2.Parameters.Add("@DescripcionAccionMejora", SqlDbType.VarChar);
                   //  comando2.Parameters.Add("@RecursosNecesarios", SqlDbType.Float);
                     comando2.Parameters.Add("@Peso", SqlDbType.VarChar);
                     comando2.Parameters.Add("@FechaAcordada", SqlDbType.DateTime);
@@ -95,7 +96,7 @@ namespace SEDDCargasBackEnd.Controllers
                 //    comando2.Parameters["@Perido"].Value = Perido;
                     comando2.Parameters["@Nomina"].Value = Nomina;
                     comando2.Parameters["@ClaveCompetenciaAluprint"].Value = ClaveCompetenciaAluprint;
-                    comando2.Parameters["@ClaveCursoAluprint"].Value = @ClaveCursoAluprint;
+                    comando2.Parameters["@ClaveCursoAluprint"].Value = ClaveCursoAluprint;
                     comando2.Parameters["@DescripcionAccionMejora"].Value = DescripcionAccionMejora;
                    // comando2.Parameters["@RecursosNecesarios"].Value = RecursosNecesarios;
                     comando2.Parameters["@Peso"].Value = Peso;
