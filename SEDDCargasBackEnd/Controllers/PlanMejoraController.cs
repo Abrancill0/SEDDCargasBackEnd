@@ -67,8 +67,19 @@ namespace SEDDCargasBackEnd.Controllers
                     string DescripcionAccionMejora = Convert.ToString(Valores[5]);
                    // string RecursosNecesarios = Convert.ToString(Valores[7]);
                     string Peso = Convert.ToString(Valores[6]);
-                    DateTime FechaAcordada = Convert.ToDateTime(Valores[7]);
-                   // string TipoCurso = Convert.ToString(Valores[10]);
+                    //DateTime FechaAcordada = Convert.ToDateTime(Valores[7]);
+
+
+                    string FechaAcordadaSinFormato = Convert.ToString(Valores[7]);
+
+                    string Dia1 = (FechaAcordadaSinFormato.Substring(0, 2));
+                    string Mes1 = (FechaAcordadaSinFormato.Substring(3, 2));
+                    string Año1 = (FechaAcordadaSinFormato.Substring(6, 4));
+
+                    string FechaAcordadaCasiFormato = (Año1 + '-' + Mes1 + '-' + Dia1);
+                    string FechaAcordada = FechaAcordadaCasiFormato;
+
+                    // string TipoCurso = Convert.ToString(Valores[10]);
                     string TipoAccionesMejora = Convert.ToString(Valores[8]);
                     //string ClaveCursoAluprint = Convert.ToString(Valores[9]);
 
