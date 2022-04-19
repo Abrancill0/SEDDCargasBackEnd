@@ -30,7 +30,7 @@ namespace SEDDCargasBackEnd.Controllers
         public JObject Post(ParametorsEntrada Datos)
         {
 
-            Int64 ClaveVariante =0;
+            string ClaveVariante ="0";
             Int64 ClaveObjetivo = 0;
             float Peso =0;
 
@@ -59,7 +59,7 @@ namespace SEDDCargasBackEnd.Controllers
 
                     string[] Valores = EliminaParte3.Split(',');
 
-                     ClaveVariante = Convert.ToInt64(Valores[0]);
+                     ClaveVariante = Convert.ToString(Valores[0]);
                      ClaveObjetivo = Convert.ToInt64(Valores[1]);
                      Peso = Convert.ToSingle(Valores[2]);
 
@@ -68,7 +68,7 @@ namespace SEDDCargasBackEnd.Controllers
 
 
                     //Declaracion de parametros 
-                    comando2.Parameters.Add("@ClaveVariantePuesto", SqlDbType.BigInt);
+                    comando2.Parameters.Add("@ClaveVariantePuesto", SqlDbType.NVarChar);
                     comando2.Parameters.Add("@ClaveObjetivo", SqlDbType.BigInt);
                     comando2.Parameters.Add("@Peso", SqlDbType.Float);
                     comando2.Parameters.Add("@Fila", SqlDbType.Int);
