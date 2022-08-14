@@ -34,9 +34,10 @@ namespace SEDDCargasBackEnd.Controllers
 
             public int PesoTotal { get; set; }
 
-            public string PuestoVariante { get; set; }
+            //public string PuestoVariante { get; set; }
 
-            public string NombreVariante { get; set; }
+            //public string NombreVariante { get; set; }
+            public string NivelPuesto { get; set; }
 
             public int Objetivos { get; set; }
 
@@ -86,14 +87,15 @@ namespace SEDDCargasBackEnd.Controllers
                             Departamento = Convert.ToString(row["Departamento"]),
                             NumeroEmpleado = Convert.ToString(row["NumeroEmpleado"]),
                             NombreEmpleado = Convert.ToString(row["NombreEmpleado"]),
+                            NivelPuesto = Convert.ToString(row["NivelPuesto"]),
                             Acciones = Convert.ToInt32(row["Acciones"]),
                             Peso = Convert.ToInt32(row["Peso"]),
                             Puesto = Convert.ToString(row["Puesto"]),
                             Nombre = Convert.ToString(row["Nombre"]),
                             Competencia = Convert.ToInt32(row["Competencia"]),
                             PesoTotal = Convert.ToInt32(row["PesoTotal"]),
-                            PuestoVariante = Convert.ToString(row["PuestoVariante"]),
-                            NombreVariante = Convert.ToString(row["NombreVariante"]),
+                            //PuestoVariante = Convert.ToString(row["PuestoVariante"]),
+                            //NombreVariante = Convert.ToString(row["NombreVariante"]),
                             Objetivos = Convert.ToInt32(row["Objetivos"]),
                             PesoTotalobj = Convert.ToInt32(row["PesoTotalobj"]),
                             Condicion = Convert.ToString(row["Condicion"])

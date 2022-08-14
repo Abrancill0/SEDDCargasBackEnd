@@ -167,6 +167,9 @@
     <Compile Include="Clases\VariablesGlobales.cs" />
     <Compile Include="Controllers\EsquemaObjetivosController.cs" />
     <Compile Include="Controllers\AñoAnteriorPlanMejoraController.cs" />
+    <Compile Include="Controllers\ListadoPeriodoController.cs" />
+    <Compile Include="Controllers\ListadoEmpresaController.cs" />
+    <Compile Include="Controllers\ListadoIdiomasController.cs" />
     <Compile Include="Controllers\ValidacionDatosController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ActualizaJefesController.cs" />

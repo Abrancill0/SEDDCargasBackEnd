@@ -58,11 +58,13 @@ namespace SEDDCargasBackEnd.Controllers
                     double Aceptable = Convert.ToDouble(Valores[1]);
                     double Sobresaliente = Convert.ToDouble(Valores[2]);
                     double Excelente = Convert.ToDouble(Valores[3]);
-                    double Mes = Convert.ToDouble(Valores[4]);
-                    double AceptableM = Convert.ToDouble(Valores[5]);
-                    double SobresalienteM = Convert.ToDouble(Valores[6]);
-                    double ExcelenteM = Convert.ToDouble(Valores[7]);
-                   
+                    int Empresaid = Convert.ToInt32(Valores[4]);
+                    int Periodoid = Convert.ToInt32(Valores[5]);
+                    //double Mes = Convert.ToDouble(Valores[4]);
+                    //double AceptableM = Convert.ToDouble(Valores[5]);
+                    //double SobresalienteM = Convert.ToDouble(Valores[6]);
+                    //double ExcelenteM = Convert.ToDouble(Valores[7]);
+
                     SqlCommand comando2 = new SqlCommand("Cargas.AltaMeta");
                     comando2.CommandType = CommandType.StoredProcedure;
 
@@ -71,10 +73,12 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters.Add("@Aceptable", SqlDbType.Float);
                     comando2.Parameters.Add("@Sobresaliente", SqlDbType.Float);
                     comando2.Parameters.Add("@Excelente", SqlDbType.Float);
-                    comando2.Parameters.Add("@Mes", SqlDbType.Float);
-                    comando2.Parameters.Add("@AceptableM", SqlDbType.Float);
-                    comando2.Parameters.Add("@SobresalienteM", SqlDbType.Float);
-                    comando2.Parameters.Add("@ExcelenteM", SqlDbType.Float);
+                    comando2.Parameters.Add("@EmpresaID", SqlDbType.Int);
+                    comando2.Parameters.Add("@Periodoid", SqlDbType.Int);
+                    //comando2.Parameters.Add("@Mes", SqlDbType.Float);
+                    //comando2.Parameters.Add("@AceptableM", SqlDbType.Float);
+                    //comando2.Parameters.Add("@SobresalienteM", SqlDbType.Float);
+                    //comando2.Parameters.Add("@ExcelenteM", SqlDbType.Float);
                     comando2.Parameters.Add("@Fila", SqlDbType.VarChar);
 
                     //Asignacion de valores a parametros
@@ -82,10 +86,12 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters["@Aceptable"].Value = Aceptable;
                     comando2.Parameters["@Sobresaliente"].Value = Sobresaliente;
                     comando2.Parameters["@Excelente"].Value = Excelente;
-                    comando2.Parameters["@Mes"].Value = Mes;
-                    comando2.Parameters["@AceptableM"].Value = AceptableM;
-                    comando2.Parameters["@SobresalienteM"].Value = SobresalienteM;
-                    comando2.Parameters["@ExcelenteM"].Value = ExcelenteM;
+                    comando2.Parameters["@EmpresaID"].Value = Empresaid;
+                    comando2.Parameters["@Periodoid"].Value = Periodoid;
+                    //comando2.Parameters["@Mes"].Value = Mes;
+                    //comando2.Parameters["@AceptableM"].Value = AceptableM;
+                    //comando2.Parameters["@SobresalienteM"].Value = SobresalienteM;
+                    //comando2.Parameters["@ExcelenteM"].Value = ExcelenteM;
                     comando2.Parameters["@Fila"].Value = i;
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);

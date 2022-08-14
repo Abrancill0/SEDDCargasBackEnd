@@ -28,7 +28,7 @@ namespace SEDDCargasBackEnd.Controllers
 
         public JObject Post(ParametorsEntrada Datos)
         {
-
+            int arreglo = 0;
             try
             {
                 string Mensaje = "";
@@ -43,7 +43,7 @@ namespace SEDDCargasBackEnd.Controllers
                 string[] ArregloFinal = ArregloTratado2.Split('{');
 
                 List<ParametrosSalida> lista = new List<ParametrosSalida>();
-
+               
                 for (int i = 1; i < ArregloFinal.Length; i++)
                 {
                     string ArregloSimple = ArregloFinal[i];
@@ -54,7 +54,14 @@ namespace SEDDCargasBackEnd.Controllers
 
                     string[] Valores = EliminaParte3.Split(',');
 
+                   
 
+                    arreglo = i;
+
+                    if (arreglo == 45)
+                    {
+                        DateTime fecha1 = DateTime.Today;
+                    }
 
                     DateTime fecha = DateTime.Today;
 
@@ -89,30 +96,27 @@ namespace SEDDCargasBackEnd.Controllers
                     //Declaracion de parametros 
                     comando2.Parameters.Add("@Empresa", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Idioma", SqlDbType.VarChar);
-                   // comando2.Parameters.Add("@Perido", SqlDbType.Float);
+              
                     comando2.Parameters.Add("@Nomina", SqlDbType.Float);
                     comando2.Parameters.Add("@ClaveCompetenciaAluprint", SqlDbType.Float);
                     comando2.Parameters.Add("@ClaveCursoAluprint", SqlDbType.Float);
                     comando2.Parameters.Add("@DescripcionAccionMejora", SqlDbType.VarChar);
-                  //  comando2.Parameters.Add("@RecursosNecesarios", SqlDbType.Float);
+               
                     comando2.Parameters.Add("@Peso", SqlDbType.VarChar);
                     comando2.Parameters.Add("@FechaAcordada", SqlDbType.DateTime);
-                  //  comando2.Parameters.Add("@TipoCurso", SqlDbType.VarChar);
+            
                     comando2.Parameters.Add("@TipoAccionesMejora", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Fila", SqlDbType.VarChar);
 
                     //Asignacion de valores a parametros
                     comando2.Parameters["@Empresa"].Value = Empresa;
                     comando2.Parameters["@Idioma"].Value = Idioma;
-                //    comando2.Parameters["@Perido"].Value = Perido;
                     comando2.Parameters["@Nomina"].Value = Nomina;
                     comando2.Parameters["@ClaveCompetenciaAluprint"].Value = ClaveCompetenciaAluprint;
                     comando2.Parameters["@ClaveCursoAluprint"].Value = ClaveCursoAluprint;
                     comando2.Parameters["@DescripcionAccionMejora"].Value = DescripcionAccionMejora;
-                   // comando2.Parameters["@RecursosNecesarios"].Value = RecursosNecesarios;
                     comando2.Parameters["@Peso"].Value = Peso;
                     comando2.Parameters["@FechaAcordada"].Value = FechaAcordada;
-                   // comando2.Parameters["@TipoCurso"].Value = TipoCurso;
                     comando2.Parameters["@TipoAccionesMejora"].Value = TipoAccionesMejora;
                     comando2.Parameters["@Fila"].Value = i;
 
@@ -169,7 +173,8 @@ namespace SEDDCargasBackEnd.Controllers
                 {
                     mensaje = "OK",
                     estatus = 1,
-                    Resultado = lista
+                    Resultado = lista,
+                    
                 });
 
                 return Resultado;
@@ -183,6 +188,7 @@ namespace SEDDCargasBackEnd.Controllers
                 {
                     mensaje = ex.ToString(),
                     estatus = 0,
+                    arreglin = arreglo
 
                 });
 

@@ -30,7 +30,7 @@ namespace SEDDCargasBackEnd.Controllers
         public JObject Post(ParametorsEntrada Datos)
         {
 
-            string ClaveVariante ="0";
+            string Nomina = "0";
             Int64 ClaveObjetivo = 0;
             float Peso =0;
 
@@ -59,7 +59,7 @@ namespace SEDDCargasBackEnd.Controllers
 
                     string[] Valores = EliminaParte3.Split(',');
 
-                     ClaveVariante = Convert.ToString(Valores[0]);
+                    Nomina = Convert.ToString(Valores[0]);
                      ClaveObjetivo = Convert.ToInt64(Valores[1]);
                      Peso = Convert.ToSingle(Valores[2]);
 
@@ -68,13 +68,13 @@ namespace SEDDCargasBackEnd.Controllers
 
 
                     //Declaracion de parametros 
-                    comando2.Parameters.Add("@ClaveVariantePuesto", SqlDbType.NVarChar);
+                    comando2.Parameters.Add("@Nomina", SqlDbType.VarChar);
                     comando2.Parameters.Add("@ClaveObjetivo", SqlDbType.BigInt);
                     comando2.Parameters.Add("@Peso", SqlDbType.Float);
                     comando2.Parameters.Add("@Fila", SqlDbType.Int);
 
                     //Asignacion de valores a parametros
-                    comando2.Parameters["@ClaveVariantePuesto"].Value = ClaveVariante;// Datos.IDHoles;
+                    comando2.Parameters["@Nomina"].Value = Nomina;// Datos.IDHoles;
                     comando2.Parameters["@ClaveObjetivo"].Value = ClaveObjetivo;// Datos.IDHoles;
                     comando2.Parameters["@Peso"].Value = Peso;// Datos.IDHoles;
                     comando2.Parameters["@Fila"].Value = i;// Datos.IDHoles;
@@ -144,7 +144,7 @@ namespace SEDDCargasBackEnd.Controllers
                 {
                     mensaje = ex.ToString(),
                     estatus = 0,
-                    ClaveVariante = ClaveVariante,
+                    ClaveVariante = Nomina,
                     ClaveObjetivo = ClaveObjetivo,
                     Peso = Peso
                 });

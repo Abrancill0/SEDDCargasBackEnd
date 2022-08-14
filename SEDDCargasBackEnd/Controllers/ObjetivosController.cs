@@ -31,7 +31,7 @@ namespace SEDDCargasBackEnd.Controllers
             string NombreObjetivo = "";
             Int64 NominaDueñoObjetivo = 0;
             Int64 NominaResponsable = 0;
-
+            int arreglo =0;
             try
             {
                 string Mensaje = "";
@@ -49,6 +49,11 @@ namespace SEDDCargasBackEnd.Controllers
 
                 for (int i = 1; i < ArregloFinal.Length; i++)
                 {
+                    arreglo = i;
+                    if (arreglo==74)
+                    {
+                        Estatus = 0;
+                    }
                     string ArregloSimple = ArregloFinal[i];
 
                     string EliminaParte1 = ArregloSimple.Replace("{", "");
@@ -167,9 +172,10 @@ namespace SEDDCargasBackEnd.Controllers
                     estatus = 0,
                     NombreObjetivo = NombreObjetivo,
                     NominaDueñoObjetivo = NominaDueñoObjetivo,
-                    NominaResponsable = NominaResponsable
+                    NominaResponsable = NominaResponsable,
+                    arreglin= arreglo
 
-            });
+                });
 
                 return Resultado;
             }

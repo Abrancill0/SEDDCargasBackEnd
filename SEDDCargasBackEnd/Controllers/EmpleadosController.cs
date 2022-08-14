@@ -65,7 +65,7 @@ namespace SEDDCargasBackEnd.Controllers
                     Int64 CentroCosto = Convert.ToInt64(Valores[6]);
                     string Nomina = Convert.ToString(Valores[7]);
                     string ClavePuesto = Convert.ToString(Valores[8]);
-                    string VariantePuesto = Convert.ToString(Valores[9]);
+                    //string VariantePuesto = Convert.ToString(Valores[9]);
                     string NominaJefe = Convert.ToString(Valores[10]);
                     string JerarquiaEmpleado = Convert.ToString(Valores[11]);
                     Int64 TipoEmpleadoCFLEX = Convert.ToInt64(Valores[12]);
@@ -110,7 +110,7 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters.Add("@CentroCosto", SqlDbType.BigInt);
                     comando2.Parameters.Add("@Nomina", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Puesto", SqlDbType.VarChar);
-                    comando2.Parameters.Add("@ClaveVariantePuesto", SqlDbType.VarChar);
+                  //comando2.Parameters.Add("@ClaveVariantePuesto", SqlDbType.VarChar);
                     comando2.Parameters.Add("@NominaJefe", SqlDbType.VarChar);
                     comando2.Parameters.Add("@JerarquiaEmpleado", SqlDbType.VarChar);
                     comando2.Parameters.Add("@TipoEmpleadoCFLEX", SqlDbType.BigInt);
@@ -135,7 +135,7 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters["@CentroCosto"].Value = CentroCosto;
                     comando2.Parameters["@Nomina"].Value = Nomina;
                     comando2.Parameters["@Puesto"].Value = ClavePuesto;
-                    comando2.Parameters["@ClaveVariantePuesto"].Value = VariantePuesto;
+                  //comando2.Parameters["@ClaveVariantePuesto"].Value = VariantePuesto;
                     comando2.Parameters["@NominaJefe"].Value = NominaJefe;
                     comando2.Parameters["@JerarquiaEmpleado"].Value = JerarquiaEmpleado;
                     comando2.Parameters["@TipoEmpleadoCFLEX"].Value = TipoEmpleadoCFLEX;
