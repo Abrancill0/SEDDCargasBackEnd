@@ -58,13 +58,15 @@ namespace SEDDCargasBackEnd.Controllers
                     string ClaveObjetivo = Convert.ToString(Valores[0]);
                     Int64 Mes = Convert.ToInt64(Valores[1]);
                     string Resultado1 = Convert.ToString(Valores[2]);
-                   
+                    string Periodoid = Convert.ToString(Valores[3]);
+
                     SqlCommand comando2 = new SqlCommand("Cargas.AltaReal");
                     comando2.CommandType = CommandType.StoredProcedure;
 
                     //Declaracion de parametros 
                     comando2.Parameters.Add("@ClaveObjetivo", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Mes", SqlDbType.Float);
+                    comando2.Parameters.Add("@PeriodoID", SqlDbType.Int);
                     comando2.Parameters.Add("@Resultado", SqlDbType.VarChar);
                     comando2.Parameters.Add("@Fila", SqlDbType.VarChar);
 
@@ -72,6 +74,7 @@ namespace SEDDCargasBackEnd.Controllers
                     comando2.Parameters["@ClaveObjetivo"].Value = ClaveObjetivo;
                     comando2.Parameters["@Mes"].Value = Mes;
                     comando2.Parameters["@Resultado"].Value = Resultado1;
+                    comando2.Parameters["@PeriodoID"].Value = Periodoid;
                     comando2.Parameters["@Fila"].Value = i;
 
                     comando2.Connection = new SqlConnection(VariablesGlobales.CadenaConexion);
